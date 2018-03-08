@@ -68,9 +68,7 @@ public class DeckOfCards {
     }
 
     public Card deal() {
-
         return deck.pop();
-
     }
 
     public int getNumCardsInDeck() {
