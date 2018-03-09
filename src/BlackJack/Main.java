@@ -1,4 +1,4 @@
-package base;
+package BlackJack;
 
 public class Main {
 

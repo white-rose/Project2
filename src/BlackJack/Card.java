@@ -1,4 +1,4 @@
-package base;
+package BlackJack;
 
 import java.util.Random;
 

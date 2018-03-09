@@ -1,8 +1,5 @@
 package BlackJack;
 
-import base.Card;
-import base.DeckOfCards;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;

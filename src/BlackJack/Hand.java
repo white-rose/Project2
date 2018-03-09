@@ -1,9 +1,6 @@
 package BlackJack;
 
-import base.Card;
-
 import java.util.ArrayList;
-import java.util.List;
 
 public class Hand {
 
