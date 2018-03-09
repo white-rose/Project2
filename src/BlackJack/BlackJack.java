@@ -28,7 +28,7 @@ public class BlackJack {
 
         for (Player player : players) {
 
-            if (player.getCount() > highest)
+            if (player.hand.getHandCount() > highest)
                 winner = player;
 
         }
@@ -38,6 +38,8 @@ public class BlackJack {
     }
 
     public static void main (String[] args ) {
+
+        boolean gameOver = false;
 
         deckOfCards.shuffle();
 
@@ -53,10 +55,15 @@ public class BlackJack {
         activePlayers = numberOfPlayers;
 
         for (int k = 0; k < numberOfPlayers; k++) {
-            players.add(new Player(k));
+            Card cardDealt = hit();
+            Player player = new Player(k);
+            //Deal 2 cards in the beginning to each Player
+            player.hand.cards.add(cardDealt);
+            player.hand.cards.add(cardDealt);
+            System.out.println("The hand count for Player " + player.getName() + " is " + player.hand.getHandCount());
+            //Add player to game
+            players.add(player);
         }
-
-        boolean gameOver = false;
 
         while (activePlayers > 1) {
 
@@ -70,10 +77,10 @@ public class BlackJack {
                     switch (choice) {
 
                         case 1:
-                            Card cardDealt = hit();
-                            player.setCount(player.getCount() + cardDealt.getFace());
-                            System.out.println(player.getCount());
-                            if (player.getCount() > 21) {
+                            //Deal card
+                            player.hand.cards.add(hit());
+                            System.out.println(player.hand.getHandCount());
+                            if (player.hand.getHandCount() > 21) {
                                 loser = player;
                                 gameOver = true;
                             }
@@ -102,19 +109,12 @@ public class BlackJack {
 class Player {
 
     boolean stillInGame = true;
-
-    public int count, name;
+    public int name;
+    Hand hand;
 
     Player(int name) {
+        this.hand = new Hand();
         this.name = name;
-    }
-
-    public int getCount() {
-        return count;
-    }
-
-    public void setCount(int count) {
-        this.count = count;
     }
 
     public int getName() {
@@ -132,4 +132,5 @@ class Player {
     public void setStillInGame(boolean stillInGame) {
         this.stillInGame = stillInGame;
     }
+
 }

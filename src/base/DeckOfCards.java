@@ -68,7 +68,9 @@ public class DeckOfCards {
     }
 
     public Card deal() {
-        return deck.pop();
+        Card cardDealt = deck.pop();
+        System.out.println("The card that was dealt is " + cardDealt.faceValue + " of " + cardDealt.getSuitName());
+        return cardDealt;
     }
 
     public int getNumCardsInDeck() {

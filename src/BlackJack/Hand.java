@@ -1,10 +1,23 @@
 package BlackJack;
 
+import base.Card;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Hand {
 
-    List hand = new ArrayList();
+    public ArrayList<Card> cards = new ArrayList<>();
+
+    int getHandCount() {
+
+        int handCountTotal = 0;
+
+        for (Card card : cards) {
+            handCountTotal += card.getFace();
+        }
+
+        return handCountTotal;
+    }
 
 }

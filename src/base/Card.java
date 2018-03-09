@@ -4,25 +4,25 @@ import java.util.Random;
 
 public class Card {
 
-    public static int ACE = 1, TWO = 2, THREE = 3, FOUR = 4, FIVE = 5, SIX = 6, SEVEN = 7, EIGHT = 8, NINE = 9, TEN = 10, JACK = 11, QUEEN = 12, KING = 13,
-                CLUBS, DIAMONDS , SPADES, HEARTS;
+    public static final int ACE = 1, TWO = 2, THREE = 3, FOUR = 4, FIVE = 5, SIX = 6, SEVEN = 7, EIGHT = 8, NINE = 9, TEN = 10, JACK = 10, QUEEN = 10, KING = 10,
+            CLUBS = 11, DIAMONDS = 12, HEARTS = 13, SPADES = 14;
 
     int faceValue;
     SUIT suit;
 
-    int[] values  = new int[] {
-            ACE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN, JACK, QUEEN, KING
-    };
-
-    SUIT[] faces = new SUIT[] {
-            SUIT.DIAMOND, SUIT.CLUB, SUIT.HEART, SUIT.SPADE
-    };
-
     Card() {
 
+        int[] possibleValues  = new int[] {
+                ACE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN, JACK, QUEEN, KING
+        };
+
+        SUIT[] possibleFaces = new SUIT[] {
+                SUIT.DIAMOND, SUIT.CLUB, SUIT.HEART, SUIT.SPADE
+        };
+
         Random random = new Random();
-        this.suit = faces[random.nextInt(4)];
-        this.faceValue = values[random.nextInt(12)];
+        this.suit = possibleFaces[random.nextInt(4)];
+        this.faceValue = possibleValues[random.nextInt(12)];
 
     }
 
@@ -38,7 +38,7 @@ public class Card {
     }
 
     public String getFaceName() {
-        return this.suit.name();
+        return "The facevalue";
     }
 
     public int getSuit() {
@@ -56,12 +56,18 @@ public class Card {
             return false;
     }
 
+    public boolean isHigherThan(Card card2, boolean aceHigh) {
+        if (this.faceValue > card2.faceValue)
+            return true;
+        else
+            return false;
+    }
+
     public String toString() {
 
         return "The face of this card is " + this.faceValue + " and the value is " + this.faceValue;
 
     }
-
 
 }
 
