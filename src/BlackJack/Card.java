@@ -4,41 +4,43 @@ import java.util.Random;
 
 public class Card {
 
+    //Used enums instead
     public static final int ACE = 1, TWO = 2, THREE = 3, FOUR = 4, FIVE = 5, SIX = 6, SEVEN = 7, EIGHT = 8, NINE = 9, TEN = 10, JACK = 10, QUEEN = 10, KING = 10,
             CLUBS = 11, DIAMONDS = 12, HEARTS = 13, SPADES = 14;
 
-    int faceValue;
+    Face face;
     SUIT suit;
 
     Card() {
 
-        int[] possibleValues  = new int[] {
-                ACE, TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN, JACK, QUEEN, KING
+        Face[] possibleValues  = new Face[] {
+                Face.ONE, Face.TWO, Face.THREE, Face.FOUR, Face.FIVE, Face.SIX, Face.SEVEN, Face.EIGHT, Face.NINE, Face.TEN, Face.JACK, Face.QUEEN, Face.KING
         };
 
         SUIT[] possibleFaces = new SUIT[] {
-                SUIT.DIAMOND, SUIT.CLUB, SUIT.HEART, SUIT.SPADE
+                SUIT.DIAMONDS, SUIT.CLUBS, SUIT.HEARTS, SUIT.SPADES
         };
 
         Random random = new Random();
         this.suit = possibleFaces[random.nextInt(4)];
-        this.faceValue = possibleValues[random.nextInt(12)];
+        this.face = possibleValues[random.nextInt(12)];
 
     }
 
-    Card(int faceValue, SUIT suitValue) {
+    Card(Face faceValue, SUIT suitValue) {
 
-        this.faceValue = faceValue;
+        this.face = faceValue;
         this.suit = suitValue;
 
     }
 
     public int getFace() {
-        return this.faceValue;
+        return this.face.value;
     }
 
     public String getFaceName() {
-        return "The facevalue";
+
+        return this.face.name();
     }
 
     public int getSuit() {
@@ -50,14 +52,14 @@ public class Card {
     }
 
     public boolean isHigherThan(Card card2) {
-        if (this.faceValue > card2.faceValue)
+        if (this.face.value > card2.face.value)
             return true;
         else
             return false;
     }
 
     public boolean isHigherThan(Card card2, boolean aceHigh) {
-        if (this.faceValue > card2.faceValue)
+        if (this.face.value > card2.face.value)
             return true;
         else
             return false;
@@ -65,7 +67,7 @@ public class Card {
 
     public String toString() {
 
-        return "The face of this card is " + this.faceValue + " and the value is " + this.faceValue;
+        return "The face of this card is " + this.face.value + " and the value is " + this.face.value;
 
     }
 
@@ -73,11 +75,23 @@ public class Card {
 
 enum SUIT {
 
-    DIAMOND(1), SPADE(2), HEART(3), CLUB(4);
+    DIAMONDS(1), SPADES(2), HEARTS(3), CLUBS(4);
 
     public int value;
 
     SUIT(int value) {
+        this.value = value;
+    }
+
+}
+
+enum Face {
+
+    ONE(1), TWO(2), THREE(3), FOUR(4), FIVE(5), SIX(6), SEVEN(7), EIGHT(8), NINE(9), TEN(10), JACK(10), QUEEN(10), KING(10);
+
+    public int value;
+
+    Face(int value) {
         this.value = value;
     }
 

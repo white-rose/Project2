@@ -2,18 +2,10 @@ package BlackJack;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main (String[] args) {
 
-        DeckOfCards deck = new DeckOfCards();
-        int cardNumber = 1;
-
-        deck.shuffle();
-
-        while (deck.hasMoreCards())
-        {
-            System.out.println(cardNumber + ": " + deck.deal());
-            cardNumber++;
-        }
+        System.out.println(SUIT.CLUBS);
 
     }
+
 }

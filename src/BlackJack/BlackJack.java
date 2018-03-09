@@ -6,11 +6,8 @@ import java.util.Scanner;
 
 public class BlackJack {
 
-    static DeckOfCards deckOfCards = new DeckOfCards();
-    static int numberOfPlayers = 0;
-    static int activePlayers = 0;
-    static Player winner, loser;
-    static List<Player> players = new ArrayList();
+    private static DeckOfCards deckOfCards = new DeckOfCards();
+    private static List<Player> players = new ArrayList<>();
 
     static Card hit() {
 
@@ -25,8 +22,9 @@ public class BlackJack {
 
         for (Player player : players) {
 
-            if (player.hand.getHandCount() > highest)
+            if (player.hand.getHandCount() > highest && player.hand.getHandCount() < 22) {
                 winner = player;
+            }
 
         }
 
@@ -36,11 +34,12 @@ public class BlackJack {
 
     public static void main (String[] args ) {
 
-        boolean gameOver = false;
-
         deckOfCards.shuffle();
 
         Scanner scanner = new Scanner(System.in);
+
+        int numberOfPlayers = 0;
+        int activePlayers;
 
         while (numberOfPlayers < 2) {
             System.out.println("How many players are playing this game?");
@@ -52,11 +51,10 @@ public class BlackJack {
         activePlayers = numberOfPlayers;
 
         for (int k = 0; k < numberOfPlayers; k++) {
-            Card cardDealt = hit();
             Player player = new Player(k);
             //Deal 2 cards in the beginning to each Player
-            player.hand.cards.add(cardDealt);
-            player.hand.cards.add(cardDealt);
+            player.hand.cards.add(hit());
+            player.hand.cards.add(hit());
             System.out.println("The hand count for Player " + player.getName() + " is " + player.hand.getHandCount());
             //Add player to game
             players.add(player);
@@ -66,7 +64,7 @@ public class BlackJack {
 
             for (Player player : players) {
 
-                if (!gameOver && player.isStillInGame()) {
+                if (player.isStillInGame()) {
 
                     System.out.println("Player " + player.getName() + " , Do you want to Hit(1) or Stand(2)?");
                     int choice = scanner.nextInt();
@@ -74,16 +72,18 @@ public class BlackJack {
                     switch (choice) {
 
                         case 1:
-                            //Deal card
+                            //Deal card (hit)
                             player.hand.cards.add(hit());
-                            System.out.println(player.hand.getHandCount());
+                            System.out.println("The hand count for player " + player.getName() +  " is now " + player.hand.getHandCount());
                             if (player.hand.getHandCount() > 21) {
-                                loser = player;
-                                gameOver = true;
+                                System.out.println("Player " + player.getName() + " has busted");
+                                player.stillInGame = false;
+                                activePlayers--;
                             }
                             break;
 
                         case 2:
+                            //Player chooses to stand
                             player.stillInGame = false;
                             activePlayers--;
                             break;
@@ -97,7 +97,7 @@ public class BlackJack {
         }
 
 
-        System.out.println("The game is over. \nThe winner is player " + determineWinner().getName());
+        System.out.println("The winner is player " + determineWinner().getName());
 
     }
 
@@ -107,6 +107,7 @@ class Player {
 
     boolean stillInGame = true;
     public int name;
+    int wins = 0 , losses = 0;
     Hand hand;
 
     Player(int name) {
