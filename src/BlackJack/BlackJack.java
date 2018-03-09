@@ -39,22 +39,27 @@ public class BlackJack {
 
     private static Player determineWinner() {
 
-        Player winner = null;
+
+        int indexOfWinner = 0;
         int highest = 0;
 
         for (Player player : players) {
 
             if (player.hand.getHandCount() > highest && player.hand.getHandCount() < 22) {
-                winner = player;
+                indexOfWinner = players.indexOf(player);
+                highest = player.hand.getHandCount();
             }
 
         }
 
-        return winner;
+        players.get(indexOfWinner).wins++;
+        return players.get(indexOfWinner);
 
     }
 
     public static void main (String[] args) {
+
+        boolean stillPlaying = true;
 
         deckOfCards.shuffle();
 
@@ -86,45 +91,50 @@ public class BlackJack {
             players.add(player);
         }
 
-        while (activePlayers > 0) {
-
+            activePlayers = numberOfPlayers;
             for (Player player : players) {
+                player.stillInGame = true;
+            }
+            while (activePlayers > 0) {
 
-                if (player.isStillInGame()) {
+                for (Player player : players) {
 
-                    System.out.println("Player " + player.getName() + " your count is " + player.hand.getHandCount() + " , Do you want to Hit(1) or Stand(2)?");
-                    int choice = scanner.nextInt();
+                    if (player.isStillInGame()) {
 
-                    //Handles Hit and Stand
-                    switch (choice) {
+                        System.out.println("Player " + player.getName() + " has " + player.wins + " wins and their count is " + player.hand.getHandCount() + " , Do you want to Hit(1) or Stand(2)?");
+                        int choice = scanner.nextInt();
 
-                        case 1:
-                            //Deal card (hit)
-                            player.hand.cards.add(hit());
-                            System.out.println("The hand count for player " + player.getName() +  " is now " + player.hand.getHandCount());
-                            if (player.hand.getHandCount() > 21) {
-                                System.out.println("Player " + player.getName() + " has busted");
+                        //Handles Hit and Stand
+                        switch (choice) {
+
+                            case 1:
+                                //Deal card (hit)
+                                player.hand.cards.add(hit());
+                                System.out.println("The hand count for player " + player.getName() + " is now " + player.hand.getHandCount());
+                                if (player.hand.getHandCount() > 21) {
+                                    System.out.println("Player " + player.getName() + " has busted");
+                                    player.stillInGame = false;
+                                    activePlayers--;
+                                    player.losses--;
+                                }
+                                break;
+
+                            case 2:
+                                //Player chooses to stand
                                 player.stillInGame = false;
                                 activePlayers--;
-                            }
-                            break;
+                                break;
 
-                        case 2:
-                            //Player chooses to stand
-                            player.stillInGame = false;
-                            activePlayers--;
-                            break;
-
-                        default:
-                            System.out.println("That was an invalid choice");
-                            break;
+                            default:
+                                System.out.println("That was an invalid choice");
+                                break;
+                        }
                     }
                 }
             }
-        }
 
 
-        System.out.println("The winner is player " + determineWinner().getName());
+            System.out.println("The winner is player " + determineWinner().getName());
 
     }
 
