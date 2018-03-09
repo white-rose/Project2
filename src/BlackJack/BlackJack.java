@@ -6,16 +6,38 @@ import java.util.Scanner;
 
 public class BlackJack {
 
+
     private static DeckOfCards deckOfCards = new DeckOfCards();
     private static List<Player> players = new ArrayList<>();
 
-    static Card hit() {
+    private static Card hit() {
+        Scanner scanner = new Scanner(System.in);
+        Boolean done = false;
 
-        return deckOfCards.deal();
+        Card cardDealt;
+        cardDealt = deckOfCards.deal();
+        if (cardDealt.face.name().equals("ACE")) {
+
+            while (!done) {
+                System.out.println("Do you want the ACE to have the value of a 1 or 11?");
+                int answer = scanner.nextInt();
+                if (answer == 1) {
+                    cardDealt.face.setValue(1);
+                    done = true;
+                } else if (answer == 11) {
+                    cardDealt.face.setValue(11);
+                    done = true;
+                } else {
+                    System.out.println("That is not a valid answer");
+                }
+            }
+        }
+
+        return cardDealt;
 
     }
 
-    static Player determineWinner() {
+    private static Player determineWinner() {
 
         Player winner = null;
         int highest = 0;
@@ -32,9 +54,11 @@ public class BlackJack {
 
     }
 
-    public static void main (String[] args ) {
+    public static void main (String[] args) {
 
         deckOfCards.shuffle();
+
+        Card cardDealt;
 
         Scanner scanner = new Scanner(System.in);
 
@@ -53,22 +77,25 @@ public class BlackJack {
         for (int k = 0; k < numberOfPlayers; k++) {
             Player player = new Player(k);
             //Deal 2 cards in the beginning to each Player
-            player.hand.cards.add(hit());
-            player.hand.cards.add(hit());
+            cardDealt = hit();
+            player.hand.cards.add(cardDealt);
+            cardDealt = hit();
+            player.hand.cards.add(cardDealt);
             System.out.println("The hand count for Player " + player.getName() + " is " + player.hand.getHandCount());
             //Add player to game
             players.add(player);
         }
 
-        while (activePlayers > 1) {
+        while (activePlayers > 0) {
 
             for (Player player : players) {
 
                 if (player.isStillInGame()) {
 
-                    System.out.println("Player " + player.getName() + " , Do you want to Hit(1) or Stand(2)?");
+                    System.out.println("Player " + player.getName() + " your count is " + player.hand.getHandCount() + " , Do you want to Hit(1) or Stand(2)?");
                     int choice = scanner.nextInt();
 
+                    //Handles Hit and Stand
                     switch (choice) {
 
                         case 1:

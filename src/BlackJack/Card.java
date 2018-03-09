@@ -14,7 +14,7 @@ public class Card {
     Card() {
 
         Face[] possibleValues  = new Face[] {
-                Face.ONE, Face.TWO, Face.THREE, Face.FOUR, Face.FIVE, Face.SIX, Face.SEVEN, Face.EIGHT, Face.NINE, Face.TEN, Face.JACK, Face.QUEEN, Face.KING
+                Face.ACE, Face.TWO, Face.THREE, Face.FOUR, Face.FIVE, Face.SIX, Face.SEVEN, Face.EIGHT, Face.NINE, Face.TEN, Face.JACK, Face.QUEEN, Face.KING
         };
 
         SUIT[] possibleFaces = new SUIT[] {
@@ -87,7 +87,7 @@ enum SUIT {
 
 enum Face {
 
-    ONE(1), TWO(2), THREE(3), FOUR(4), FIVE(5), SIX(6), SEVEN(7), EIGHT(8), NINE(9), TEN(10), JACK(10), QUEEN(10), KING(10);
+    ACE(1), TWO(2), THREE(3), FOUR(4), FIVE(5), SIX(6), SEVEN(7), EIGHT(8), NINE(9), TEN(10), JACK(10), QUEEN(10), KING(10);
 
     public int value;
 
@@ -95,6 +95,9 @@ enum Face {
         this.value = value;
     }
 
+    public void setValue(int value) {
+        this.value = value;
+    }
 }
 
 

@@ -9,7 +9,7 @@ public class DeckOfCards {
 
     public DeckOfCards() {
 
-        deck.push(new Card(Face.ONE, SUIT.DIAMONDS));
+        deck.push(new Card(Face.ACE, SUIT.DIAMONDS));
         deck.push(new Card(Face.TWO, SUIT.DIAMONDS));
         deck.push(new Card(Face.THREE, SUIT.DIAMONDS));
         deck.push(new Card(Face.FOUR, SUIT.DIAMONDS));
@@ -23,7 +23,7 @@ public class DeckOfCards {
         deck.push(new Card(Face.QUEEN, SUIT.DIAMONDS));
         deck.push(new Card(Face.KING, SUIT.DIAMONDS));
 
-        deck.push(new Card(Face.ONE, SUIT.SPADES));
+        deck.push(new Card(Face.ACE, SUIT.SPADES));
         deck.push(new Card(Face.TWO, SUIT.SPADES));
         deck.push(new Card(Face.THREE, SUIT.SPADES));
         deck.push(new Card(Face.FOUR, SUIT.SPADES));
@@ -37,7 +37,7 @@ public class DeckOfCards {
         deck.push(new Card(Face.QUEEN, SUIT.SPADES));
         deck.push(new Card(Face.KING, SUIT.SPADES));
 
-        deck.push(new Card(Face.ONE, SUIT.HEARTS));
+        deck.push(new Card(Face.ACE, SUIT.HEARTS));
         deck.push(new Card(Face.TWO, SUIT.HEARTS));
         deck.push(new Card(Face.THREE, SUIT.HEARTS));
         deck.push(new Card(Face.FOUR, SUIT.HEARTS));
@@ -51,7 +51,7 @@ public class DeckOfCards {
         deck.push(new Card(Face.QUEEN, SUIT.HEARTS));
         deck.push(new Card(Face.KING, SUIT.HEARTS));
 
-        deck.push(new Card(Face.ONE, SUIT.CLUBS));
+        deck.push(new Card(Face.ACE, SUIT.CLUBS));
         deck.push(new Card(Face.TWO, SUIT.CLUBS));
         deck.push(new Card(Face.THREE, SUIT.CLUBS));
         deck.push(new Card(Face.FOUR, SUIT.CLUBS));
