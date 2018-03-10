@@ -6,7 +6,6 @@ import java.util.Scanner;
 
 public class BlackJack {
 
-
     private static DeckOfCards deckOfCards = new DeckOfCards();
     private static List<Player> players = new ArrayList<>();
 
@@ -38,7 +37,6 @@ public class BlackJack {
     }
 
     private static Player determineWinner() {
-
 
         int indexOfWinner = 0;
         int highest = 0;
@@ -77,24 +75,26 @@ public class BlackJack {
                 System.out.println("Number of players have to be greater than 1");
         }
 
-        activePlayers = numberOfPlayers;
-
-        for (int k = 0; k < numberOfPlayers; k++) {
-            Player player = new Player(k);
-            //Deal 2 cards in the beginning to each Player
-            cardDealt = hit();
-            player.hand.cards.add(cardDealt);
-            cardDealt = hit();
-            player.hand.cards.add(cardDealt);
-            System.out.println("The hand count for Player " + player.getName() + " is " + player.hand.getHandCount());
-            //Add player to game
-            players.add(player);
+        for (int i = 0; i < numberOfPlayers; i++ ) {
+            players.add(new Player(i));
         }
 
+        while (stillPlaying) {
+
             activePlayers = numberOfPlayers;
+
+            //Deal the first two cards to each player
             for (Player player : players) {
                 player.stillInGame = true;
+                player.hand.clearHand();
+                cardDealt = hit();
+                player.hand.cards.add(cardDealt);
+                cardDealt = hit();
+                player.hand.cards.add(cardDealt);
+                System.out.println("The hand count for Player " + player.getName() + " is " + player.hand.getHandCount());
+                //Add player to game
             }
+
             while (activePlayers > 0) {
 
                 for (Player player : players) {
@@ -135,6 +135,10 @@ public class BlackJack {
 
 
             System.out.println("The winner is player " + determineWinner().getName());
+            System.out.println("Do you want to play another game? Yes(1) No (2)");
+            if (scanner.nextInt() == 2)
+                stillPlaying = false;
+        }
 
     }
 

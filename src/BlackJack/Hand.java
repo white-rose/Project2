@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class Hand {
 
     public ArrayList<Card> cards = new ArrayList<>();
+    int handCount = 0;
 
     int getHandCount() {
 
@@ -15,6 +16,10 @@ public class Hand {
         }
 
         return handCountTotal;
+    }
+
+    void clearHand() {
+        cards.clear();
     }
 
     @Override
