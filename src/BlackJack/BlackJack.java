@@ -1,8 +1,10 @@
 package BlackJack;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class BlackJack {
 
@@ -36,22 +38,37 @@ public class BlackJack {
 
     }
 
-    private static Player determineWinner() {
+    private static void determineWinners() {
 
-        int indexOfWinner = 0;
         int highest = 0;
 
-        for (Player player : players) {
+        List<Player> playersNotBusted = players.stream()
+                .filter(player ->  player.hand.getHandCount() < 22)
+                .collect(Collectors.toList());
 
-            if (player.hand.getHandCount() > highest && player.hand.getHandCount() < 22) {
-                indexOfWinner = players.indexOf(player);
+        for (Player player : players) {
+            if (player.hand.getHandCount() > highest) {
                 highest = player.hand.getHandCount();
             }
-
         }
 
-        players.get(indexOfWinner).wins++;
-        return players.get(indexOfWinner);
+        int indexOfWinner = 0;
+        int numberOfWinners = 0;
+        for (Player player : playersNotBusted) {
+            if (player.hand.getHandCount() == highest) {
+                numberOfWinners++;
+                indexOfWinner = playersNotBusted.indexOf(player);
+            } else {
+                player.losses++;
+            }
+        }
+
+        if (numberOfWinners > 1) {
+            System.out.println("There is a tie");
+        } else {
+            players.get(indexOfWinner).wins++;
+            System.out.println("The winner is player " + players.get(indexOfWinner).getName());
+        }
 
     }
 
@@ -76,7 +93,7 @@ public class BlackJack {
         }
 
         for (int i = 0; i < numberOfPlayers; i++ ) {
-            players.add(new Player(i));
+            players.add(new Player(i + 1));
         }
 
         while (stillPlaying) {
@@ -101,7 +118,7 @@ public class BlackJack {
 
                     if (player.isStillInGame()) {
 
-                        System.out.println("Player " + player.getName() + " has " + player.wins + " wins and their count is " + player.hand.getHandCount() + " , Do you want to Hit(1) or Stand(2)?");
+                        System.out.println("Player " + player.getName() + " has " + player.wins + " wins, " + player.losses + " losses and their count is " + player.hand.getHandCount() + " , Do you want to Hit(1) or Stand(2)?");
                         int choice = scanner.nextInt();
 
                         //Handles Hit and Stand
@@ -133,43 +150,44 @@ public class BlackJack {
                 }
             }
 
-
-            System.out.println("The winner is player " + determineWinner().getName());
-            System.out.println("Do you want to play another game? Yes(1) No (2)");
-            if (scanner.nextInt() == 2)
+            determineWinners();
+            System.out.println("Do you want to play another game? Yes(1) No(Any other key)");
+            if (!scanner.next().equals("1"))
                 stillPlaying = false;
+        }
+
+    }
+
+    static class Player {
+
+        boolean stillInGame = true;
+        private int name;
+        int wins = 0, losses = 0;
+        Hand hand;
+
+        Player(int name) {
+            this.hand = new Hand();
+            this.name = name;
+        }
+
+        public int getName() {
+            return name;
+        }
+
+        public void setName(int name) {
+            this.name = name;
+        }
+
+        public boolean isStillInGame() {
+            return stillInGame;
+        }
+
+        public void setStillInGame(boolean stillInGame) {
+            this.stillInGame = stillInGame;
         }
 
     }
 
 }
 
-class Player {
 
-    boolean stillInGame = true;
-    public int name;
-    int wins = 0 , losses = 0;
-    Hand hand;
-
-    Player(int name) {
-        this.hand = new Hand();
-        this.name = name;
-    }
-
-    public int getName() {
-        return name;
-    }
-
-    public void setName(int name) {
-        this.name = name;
-    }
-
-    public boolean isStillInGame() {
-        return stillInGame;
-    }
-
-    public void setStillInGame(boolean stillInGame) {
-        this.stillInGame = stillInGame;
-    }
-
-}
