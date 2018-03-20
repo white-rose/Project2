@@ -1,4 +1,4 @@
-package BlackJack;
+package com.company;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -40,24 +40,25 @@ public class BlackJack {
 
     private static void determineWinners() {
 
+        Player winner = null;
+
         int highest = 0;
 
         List<Player> playersNotBusted = players.stream()
                 .filter(player ->  player.hand.getHandCount() < 22)
                 .collect(Collectors.toList());
 
-        for (Player player : players) {
+        for (Player player : playersNotBusted) {
             if (player.hand.getHandCount() > highest) {
                 highest = player.hand.getHandCount();
             }
         }
 
-        int indexOfWinner = 0;
         int numberOfWinners = 0;
         for (Player player : playersNotBusted) {
             if (player.hand.getHandCount() == highest) {
                 numberOfWinners++;
-                indexOfWinner = playersNotBusted.indexOf(player);
+                winner = player;
             } else {
                 player.losses++;
             }
@@ -66,8 +67,8 @@ public class BlackJack {
         if (numberOfWinners > 1) {
             System.out.println("There is a tie");
         } else {
-            players.get(indexOfWinner).wins++;
-            System.out.println("The winner is player " + players.get(indexOfWinner).getName());
+            winner.wins++;
+            System.out.println("The winner is player " + winner.getName());
         }
 
     }
@@ -132,7 +133,7 @@ public class BlackJack {
                                     System.out.println("Player " + player.getName() + " has busted");
                                     player.stillInGame = false;
                                     activePlayers--;
-                                    player.losses--;
+                                    player.losses++;
                                 }
                                 break;
 
